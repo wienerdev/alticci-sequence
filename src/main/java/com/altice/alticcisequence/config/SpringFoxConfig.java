@@ -26,7 +26,7 @@ public class SpringFoxConfig {
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
                 .title("Alticci Sequence API")
-                .description("\"Configuração SWAGGER para Alticci Sequence API \"")
+                .description("Configuração SWAGGER para Alticci Sequence API.")
                 .version("0.0.1")
                 .license("Apache 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
