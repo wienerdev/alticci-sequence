@@ -25,6 +25,8 @@ O serviço principal tira partido de cálculos passados para acelerar cálculos 
 
 ## 📌 Como utilizar?
 
+Para utilizar a Calculadora Alticci Sequence em produção, basta acessá-lo diretamente no seu navegador. [Clique aqui!](https://wienerdev.github.io/alticci-sequence-angular/)
+
 Para executar o projeto, digite o seguinte comando no diretório raiz:
 
 ```
