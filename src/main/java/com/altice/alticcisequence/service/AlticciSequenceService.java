@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.altice.alticcisequence.caching.CacheMemoizationManager;
 import com.altice.alticcisequence.util.TimerUtils;
-import com.altice.alticcisequence.vo.AlticciResponseVO;
+import com.altice.alticcisequence.vo.AlticciResponseDTO;
+import com.altice.alticcisequence.vo.CacheResponseDTO;
 
 @Service
 public class AlticciSequenceService {
@@ -23,26 +24,34 @@ public class AlticciSequenceService {
 	private Long cntSpringCacheCalls = 0L;
 	private Long cntMemoCacheCalls = 0L;
 
-    public ResponseEntity<AlticciResponseVO> calculateAlticciSequenceIndex(Long number) {
+    public ResponseEntity<AlticciResponseDTO> calculateAlticciSequenceIndex(Long number) {
 		validateNumber(number);
 
 		BigInteger sprResult = calculateSequence(number);
 
-		AlticciResponseVO resp = new AlticciResponseVO(timer.timeBreakFormat(), sprResult);
+		AlticciResponseDTO resp = new AlticciResponseDTO(timer.timeBreakFormat(), sprResult);
 		timer.timeBreakPrint("DONE - CALLED ["+cntSpringCacheCalls+"] TIMES ");
 
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
-    public ResponseEntity<AlticciResponseVO> calculateAlticciSequenceIndexMemoization(Long number) {
+    public ResponseEntity<AlticciResponseDTO> calculateAlticciSequenceIndexMemoization(Long number) {
 		validateNumber(number);
 
 		BigInteger memoResult = calculateWithMemoization(number);
 
-		AlticciResponseVO resp = new AlticciResponseVO(timer.timeBreakFormat(), memoResult);
+		AlticciResponseDTO resp = new AlticciResponseDTO(timer.timeBreakFormat(), memoResult);
 		timer.timeBreakPrint("> DONE - ["+cntMemoCacheCalls+"] TIMES ");
 
 		return new ResponseEntity<>(resp, HttpStatus.OK);
+	}
+
+	public ResponseEntity<CacheResponseDTO> checkSequenceCache() {
+		return new ResponseEntity<>(new CacheResponseDTO(manager.checkCacheStr()), HttpStatus.OK);
+	}
+
+	public ResponseEntity<CacheResponseDTO> deleteSequenceCache() {
+		return new ResponseEntity<>(new CacheResponseDTO(manager.clearCache()), HttpStatus.OK);
 	}
 	
 	private void validateNumber(Long number) {
