@@ -26,13 +26,14 @@ public class AlticciSequenceController {
 	CacheMemoizationManager cacheManager;
 
 	@CrossOrigin
-	@Cacheable("sequence-value")
+	@Cacheable("no-seq-memoization")
 	@GetMapping("/springCache/{n}")
 	public ResponseEntity<AlticciResponseDTO> returnAlticciSequenceValue(@PathVariable("n") Long number) {
 		return alticciSequenceService.calculateAlticciSequenceIndex(number);
 	}
 
 	@CrossOrigin
+	@Cacheable("seq-memoization")
 	@GetMapping("/memoizationCache/{n}")
 	public ResponseEntity<AlticciResponseDTO> returnAlticciSequenceValueMemoized(@PathVariable("n") Long number) {
 		return alticciSequenceService.calculateAlticciSequenceIndexMemoization(number);
